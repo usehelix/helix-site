@@ -115,7 +115,57 @@ export default function ResearchPage() {
             </div>
           </section>
 
-          {/* 3. Upcoming */}
+          {/* 3. Theoretical context */}
+          <section className="mt-16 max-w-[680px]">
+            <h2 className="mb-4 text-[22px] font-semibold tracking-[-0.02em] text-fg">
+              Theoretical context
+            </h2>
+            <p className="text-[15px] leading-[1.7] text-fg-2">
+              Helix&rsquo;s PCEC pipeline is a concrete instance of the Generator–Verifier–Updater
+              (GVU) operator framework. The Repair Graph functions as a memory-evolution layer in
+              the sense of recent episodic-memory work — high-utility patterns are retrieved
+              more, low-q patterns are naturally forgotten. We did not invent these ideas. Our
+              contribution is the application: a production-ready substrate that turns these
+              primitives into observable agent reliability.
+            </p>
+            <div className="mt-6 font-mono text-[12px] uppercase tracking-[0.06em] text-fg-3">
+              Related work
+            </div>
+            <ul className="mt-2 space-y-1.5 text-[13.5px] text-fg-2">
+              <li>GVU operator framework — defines self-improving system criteria</li>
+              <li>Episodic memory + Q-value utility (MemRL family)</li>
+              <li>Experience distillation into strategic principles</li>
+            </ul>
+          </section>
+
+          {/* 4. Reproducibility */}
+          <section className="mt-16 max-w-[680px]">
+            <h2 className="mb-4 text-[22px] font-semibold tracking-[-0.02em] text-fg">
+              Reproducibility
+            </h2>
+            <p className="text-[15px] leading-[1.7] text-fg-2">
+              Every result above is reproducible. We do not publish numbers that can&rsquo;t be
+              re-run.
+            </p>
+            <ul className="mt-4 space-y-3 text-[14.5px] leading-[1.65] text-fg-2">
+              <li>
+                <strong className="font-semibold text-fg">Base mainnet A/B test:</strong> full tx
+                hashes and CSV in the gist linked above. Reproduce by replaying the failure
+                scenarios at the recorded block heights.
+              </li>
+              <li>
+                <strong className="font-semibold text-fg">LLM benchmark:</strong> the 10
+                production revert messages are listed in the gist. Reproduce by querying the same
+                models with the same prompts.
+              </li>
+              <li>
+                <strong className="font-semibold text-fg">All A/B test data and methodology</strong>{' '}
+                is public. No proprietary preprocessing.
+              </li>
+            </ul>
+          </section>
+
+          {/* 5. What's next */}
           <section className="mt-16 max-w-[640px]">
             <h2 className="mb-4 text-[22px] font-semibold tracking-[-0.02em] text-fg">
               What&rsquo;s next
