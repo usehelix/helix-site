@@ -37,7 +37,7 @@ export function CTAStrip() {
             <Button variant="primary" size="lg" href={LINKS.calendly} external>
               Book a demo →
             </Button>
-            <Button variant="secondary" size="lg" href={LINKS.docs}>
+            <Button variant="secondary" size="lg" href="/docs">
               Read the docs ↗
             </Button>
           </div>

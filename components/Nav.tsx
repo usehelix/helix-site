@@ -8,9 +8,8 @@ const middleLinks = [
   { href: '#how', label: 'How it works' },
   { href: '#benchmark', label: 'Benchmarks' },
   { href: '#use-cases', label: 'Use cases' },
-  { href: LINKS.docs, label: 'Docs' },
-  { href: LINKS.research, label: 'Research' },
-  { href: LINKS.blog, label: 'Blog' },
+  { href: '/docs', label: 'Docs' },
+  { href: '/research', label: 'Research' },
 ]
 
 export function Nav() {

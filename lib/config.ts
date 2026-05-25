@@ -1,5 +1,5 @@
 // Public gist with the 1,083 Base mainnet tx hashes + methodology writeup.
-const PROOF_GIST = 'https://gist.github.com/adrianhihi/ca534f22dee0a1fe2eb4e0e47cb9c3e8'
+export const PROOF_GIST = 'https://gist.github.com/adrianhihi/ca534f22dee0a1fe2eb4e0e47cb9c3e8'
 
 export const LINKS = {
   calendly: 'https://calendly.com/digitalnomadsnick/30min',

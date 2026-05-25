@@ -36,12 +36,12 @@ const kw = 'text-pink-400'
 const fn = 'text-amber-300'
 const id = 'text-blue-300'
 const str = 'text-emerald-300'
-const cm = 'italic text-zinc-500'
+const cm = 'italic text-zinc-400'
 
 function CodeBlock() {
   return (
     <div className="overflow-hidden rounded-[11px] border border-code-border bg-code-bg shadow-[0_20px_40px_-20px_rgba(0,0,0,0.2)]">
-      <div className="flex items-center gap-2.5 border-b border-code-border bg-white/[0.015] px-4 py-2.5 font-mono text-[11px] text-zinc-500">
+      <div className="flex items-center gap-2.5 border-b border-code-border bg-white/[0.015] px-4 py-2.5 font-mono text-[11px] text-zinc-400">
         <span className="rounded bg-indigo-500/15 px-2 py-1 text-[10px] font-semibold text-indigo-300">
           TypeScript
         </span>

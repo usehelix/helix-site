@@ -40,3 +40,4 @@ next-env.d.ts
 /lighthouse-report.json
 /lighthouse*.json
 /scripts/*.png
+.vercel

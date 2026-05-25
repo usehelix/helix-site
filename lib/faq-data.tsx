@@ -13,9 +13,9 @@ export const FAQ_ENTRIES: FAQEntry[] = [
         Retry is stateless and dumb — it tries the same call again with the same parameters.
         Helix classifies what actually failed, looks up a known fix from a cross-tenant memory of
         past failures (the Repair Graph), and applies a different strategy. On simple ETH
-        transfers, retry works. On Uniswap V3 slippage, multi-hop routes, or rate-limited APIs,
-        retry compounds the error. Our A/B test on Base mainnet shows 81.9% (blind retry) vs
-        99.9% (Helix) over 1,083 transactions.
+        transfers, retry works. On rate-limited RPC endpoints, nonce conflicts, or stale gas
+        estimates, retry compounds the error. Our A/B test on Base mainnet shows 81.9% (blind
+        retry) vs 99.9% (Helix) over 1,083 transactions.
       </>
     ),
   },
