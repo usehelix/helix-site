@@ -1,0 +1,10 @@
+import puppeteer from 'puppeteer'
+const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-gpu'] })
+const page = await browser.newPage()
+await page.setViewport({ width: 375, height: 700, deviceScaleFactor: 2 })
+await page.goto('http://localhost:3000', { waitUntil: 'networkidle0' })
+await page.click('button[aria-label="Open menu"]')
+await new Promise((r) => setTimeout(r, 300))
+await page.screenshot({ path: '/tmp/helix-shots/step3-mobile-sheet.png' })
+await browser.close()
+console.log('ok')

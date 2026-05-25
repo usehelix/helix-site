@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Helix — light editorial palette.
+  Color tokens are duplicated as CSS vars so non-Tailwind utilities (gradients,
+  shadows, masked backgrounds) can reach them.
+*/
+:root {
+  --bg: #ffffff;
+  --bg-2: #fafafa;
+  --bg-3: #f4f4f5;
+  --text: #0a0a0a;
+  --text-2: #3f3f46;
+  --text-3: #71717a;
+  --text-4: #a1a1aa;
+  --text-5: #d4d4d8;
+  --border: #e5e5e5;
+  --border-2: #e4e4e7;
+  --border-3: #d4d4d8;
+  --indigo: #4f46e5;
+  --indigo-2: #6366f1;
+  --indigo-soft: #eef2ff;
+  --code-bg: #0f0f10;
+  --code-bg-2: #171719;
+  --code-border: #27272a;
+  --green: #10b981;
+  --amber: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.18);
+  color: var(--text);
+}
+
+/* Ambient depth gradients near the top of the page */
+.helix-ambient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 800px;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 1200px 500px at 50% -100px, rgba(99, 102, 241, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 800px 400px at 80% 200px, rgba(245, 158, 11, 0.04) 0%, transparent 60%);
+}
+
+/* Subtle grid background — top half only, masked out toward the bottom */
+.helix-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1200px;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 80%);
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 80%);
+}
+
+/* Indigo underline accent under hero h1 word */
+.indigo-word-underline {
+  position: relative;
+  display: inline-block;
+}
+.indigo-word-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 6px;
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.18), rgba(99, 102, 241, 0.03));
+  border-radius: 3px;
+  z-index: -1;
+}
+
+/* Terminal typewriter — clip-path-driven reveal per line */
+@keyframes helixTypeReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes helixBlink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+@keyframes helixNetpulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+@keyframes helixGreenPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.t-pulse-dot {
+  animation: helixNetpulse 1.6s ease-in-out infinite;
+}
+
+/*
+  Terminal line states. JS toggles `is-active` (typing, cursor blinks) and
+  `is-done` (settled, time visible) on each `.t-line` element via refs — no
+  React re-renders during the loop. CSS handles every visual transition.
+*/
+.t-line {
+  opacity: 0;
+}
+.t-line.is-active,
+.t-line.is-done {
+  opacity: 1;
+}
+.t-line .t-body-inner {
+  visibility: hidden;
+  clip-path: inset(0 100% 0 0);
+}
+.t-line.is-active .t-body-inner {
+  visibility: visible;
+  animation: helixTypeReveal linear forwards;
+}
+.t-line.is-done .t-body-inner {
+  visibility: visible;
+  clip-path: inset(0 0 0 0);
+}
+.t-line .t-cursor {
+  display: none;
+  animation: helixBlink 1s steps(2) infinite;
+}
+.t-line.is-active .t-cursor {
+  display: inline-block;
+}
+.t-line .t-time {
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
+}
+.t-line.is-done .t-time {
+  opacity: 1;
+}
+
+/* Separator fades in once Agent A's last LEARN line settles */
+.t-sep {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0 6px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  color: #52525b;
+  letter-spacing: 0.04em;
+}
+.t-sep.is-shown {
+  opacity: 1;
+}
+.t-sep::before,
+.t-sep::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #27272a, transparent);
+}
+
+/* Pulse for the live "Base mainnet" green dot in the section eyebrow */
+.helix-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
+  animation: helixGreenPulse 2.5s infinite;
+  display: inline-block;
+}
