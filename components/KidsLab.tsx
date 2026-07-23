@@ -788,6 +788,7 @@ export function KidsLab() {
             <a href="#ch4"><span>04</span>The Wave</a>
             <a href="#ch5"><span>05</span>Quiz</a>
             <a href="#ch6"><span>06</span>Your Body</a>
+            <a href="#ch7"><span>07</span>Code Lab</a>
           </nav>
         </div>
       </header>
@@ -1005,31 +1006,6 @@ export function KidsLab() {
         </div>
       </section>
 
-      {/* ================= CH7 — CODE LAB TEASER ================= */}
-      <section className="chapter" id="ch7">
-        <div className="kl-wrap">
-          <div className="rv">
-            <span className="ch-eyebrow">Chapter 07 · Code Lab</span>
-            <a className="codelab-teaser" href="/kids-lab/code">
-              <div>
-                <h2 className="ch-title">Ready to write real code?</h2>
-                <p className="ch-sub">Build a program block by block — and teach it to repair itself.</p>
-                <span className="ct-cta">Open the Code Lab →</span>
-              </div>
-              <div className="ct-art" aria-hidden="true">
-                <svg width="128" height="112" viewBox="0 0 128 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="14" y="16" width="92" height="22" rx="7" fill="#4f46e5" />
-                  <rect x="26" y="46" width="80" height="22" rx="7" fill="#2563eb" />
-                  <rect x="14" y="76" width="70" height="22" rx="7" fill="#047857" />
-                  <circle cx="112" cy="87" r="15" fill="#f59e0b" />
-                  <path d="M108 81 L119 87 L108 93 Z" fill="#fff" />
-                </svg>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* ================= CH6 — YOUR BODY ================= */}
       <section className="chapter" id="ch6">
         <div className="kl-wrap">
@@ -1085,6 +1061,32 @@ export function KidsLab() {
                 <span className="hint">tap to reveal</span>
               </button>
             ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ================= CH7 — CODE LAB TEASER ================= */}
+      <section className="chapter" id="ch7">
+        <div className="kl-wrap">
+          <div className="rv">
+            <span className="ch-eyebrow">Chapter 07 · Code Lab</span>
+            <a className="codelab-teaser" href="/kids-lab/code">
+              <div>
+                <h2 className="ch-title">Ready to write real code?</h2>
+                <p className="ch-sub">Build a program block by block — and teach it to repair itself.</p>
+                <span className="ct-cta">Open the Code Lab →</span>
+              </div>
+              <div className="ct-art" aria-hidden="true">
+                <svg width="128" height="112" viewBox="0 0 128 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="14" y="16" width="92" height="22" rx="7" fill="#4f46e5" />
+                  <rect x="26" y="46" width="80" height="22" rx="7" fill="#2563eb" />
+                  <rect x="14" y="76" width="70" height="22" rx="7" fill="#047857" />
+                  <circle cx="112" cy="87" r="15" fill="#f59e0b" />
+                  <path d="M108 81 L119 87 L108 93 Z" fill="#fff" />
+                </svg>
+              </div>
+            </a>
           </div>
 
           {/* grown-ups */}
