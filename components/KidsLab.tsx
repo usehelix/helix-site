@@ -293,6 +293,22 @@ const KIDS_LAB_CSS = `
 #kids-lab .grownups a.btn { display: inline-block; background: #fff; color: var(--gray-900); font-weight: 700; font-size: 15px; padding: 14px 26px; border-radius: 12px; text-decoration: none; transition: transform .1s; }
 #kids-lab .grownups a.btn:hover { transform: translateY(-2px); }
 #kids-lab .grownups .privacy { grid-column: 1 / -1; font-family: var(--mono); font-size: 11px; color: #9ca3af; border-top: 1px solid #374151; padding-top: 18px; margin-top: 8px; }
+/* ============ CH7 — Code Lab teaser ============ */
+#kids-lab .codelab-teaser {
+  display: flex; align-items: center; justify-content: space-between; gap: 28px;
+  text-decoration: none; color: inherit; border: 1.5px solid var(--gray-200);
+  border-radius: 20px; padding: 32px 34px; margin-top: 8px;
+  background: linear-gradient(180deg, var(--indigo-light), #fff 72%);
+  transition: border-color .15s, box-shadow .2s, transform .2s;
+}
+#kids-lab .codelab-teaser:hover { border-color: var(--indigo); box-shadow: 0 12px 30px rgba(79,70,229,.12); transform: translateY(-3px); }
+#kids-lab .codelab-teaser:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+#kids-lab .codelab-teaser .ct-cta { display: inline-block; margin-top: 16px; font-weight: 700; color: var(--indigo); font-size: 15px; }
+#kids-lab .codelab-teaser .ct-art { flex: none; }
+@media (max-width: 620px) {
+  #kids-lab .codelab-teaser { flex-direction: column; align-items: flex-start; padding: 26px 22px; }
+}
+
 #kids-lab .footer-line { text-align: center; font-size: 13px; color: var(--gray-600); padding: 36px 0 56px; }
 
 /* ============ responsive ============ */
@@ -985,6 +1001,31 @@ export function KidsLab() {
               <span>4 QUESTIONS · NO SCORES SAVED</span>
             </div>
             <Quiz />
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CH7 — CODE LAB TEASER ================= */}
+      <section className="chapter" id="ch7">
+        <div className="kl-wrap">
+          <div className="rv">
+            <span className="ch-eyebrow">Chapter 07 · Code Lab</span>
+            <a className="codelab-teaser" href="/kids-lab/code">
+              <div>
+                <h2 className="ch-title">Ready to write real code?</h2>
+                <p className="ch-sub">Build a program block by block — and teach it to repair itself.</p>
+                <span className="ct-cta">Open the Code Lab →</span>
+              </div>
+              <div className="ct-art" aria-hidden="true">
+                <svg width="128" height="112" viewBox="0 0 128 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="14" y="16" width="92" height="22" rx="7" fill="#4f46e5" />
+                  <rect x="26" y="46" width="80" height="22" rx="7" fill="#2563eb" />
+                  <rect x="14" y="76" width="70" height="22" rx="7" fill="#047857" />
+                  <circle cx="112" cy="87" r="15" fill="#f59e0b" />
+                  <path d="M108 81 L119 87 L108 93 Z" fill="#fff" />
+                </svg>
+              </div>
+            </a>
           </div>
         </div>
       </section>
