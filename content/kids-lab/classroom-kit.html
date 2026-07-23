@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Helix Kids Lab · Classroom Activity Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===================================================================
+     Helix Kids Lab — Classroom Activity Kit (print source)
+     US Letter, print-optimized. B&W-photocopy friendly: line-art SVG,
+     white fills, indigo as an accent only (saves toner). Inter for body,
+     JetBrains Mono ONLY for the IF/THEN rule lines.
+     Render to PDF with scripts/render-kit.mjs.
+     =================================================================== */
+
+  :root {
+    --indigo: #4f46e5;
+    --indigo-deep: #3730a3;
+    --ink: #111827;
+    --ink-2: #374151;
+    --ink-3: #6b7280;
+    --line: #d1d5db;
+    --sun: #f59e0b;
+    --mint: #10b981;
+  }
+
+  @page { size: 8.5in 11in; margin: 0; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    line-height: 1.5;
+    background: #fff;
+    font-size: 12pt;
+  }
+
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.6in 0.65in;
+    box-sizing: border-box;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* Screen preview only — separates the pages, never affects print. */
+  @media screen {
+    body { background: #e5e7eb; padding: 24px 0; }
+    .page { margin: 0 auto 24px; box-shadow: 0 2px 18px rgba(0,0,0,.18); }
+  }
+
+  /* ---------- shared type ---------- */
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .accent { color: var(--indigo); }
+  h1,h2,h3 { line-height: 1.15; letter-spacing: -0.01em; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 9pt; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--indigo);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .eyebrow::before {
+    content: ''; width: 12px; height: 14px; background: var(--indigo);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    flex: none;
+  }
+
+  .page-foot {
+    position: absolute; left: 0.65in; right: 0.65in; bottom: 0.4in;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 8pt; color: var(--ink-3);
+    border-top: 1px solid var(--line); padding-top: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .section-title { font-size: 24pt; font-weight: 800; margin: 10px 0 4px; }
+  .section-lead { font-size: 12pt; color: var(--ink-2); max-width: 6in; margin-bottom: 16px; }
+
+  /* ---------- SVG art defaults (inherit into <use> shadow trees) ---------- */
+  .art { fill: none; stroke: var(--ink); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- generic building blocks ---------- */
+  .box { border: 1.5px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .box-accent { border: 1.5px solid var(--indigo); border-radius: 12px; padding: 16px 18px; }
+
+  .obj-list { list-style: none; }
+  .obj-list li { position: relative; padding-left: 22px; margin-bottom: 7px; font-size: 11.5pt; color: var(--ink-2); }
+  .obj-list li::before {
+    content: ''; position: absolute; left: 0; top: 6px; width: 9px; height: 10px; background: var(--indigo);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+
+  /* writing lines with generous handwriting space */
+  .writeline { border-bottom: 1.5px solid var(--line); height: 0.42in; }
+
+  .callout {
+    background: #f9fafb; border: 1.5px solid var(--line); border-left: 4px solid var(--indigo);
+    border-radius: 8px; padding: 12px 16px; font-size: 11pt; color: var(--ink-2);
+  }
+  .callout strong { color: var(--ink); }
+
+  .say {
+    font-size: 13pt; color: var(--ink); line-height: 1.6; margin-bottom: 12px;
+  }
+  .say .cue {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; font-weight: 700;
+    color: var(--indigo); letter-spacing: 0.08em; text-transform: uppercase;
+    border: 1px solid var(--indigo); border-radius: 5px; padding: 1px 6px; margin-right: 8px; vertical-align: 2px;
+  }
+
+  .timing { width: 100%; border-collapse: collapse; margin: 6px 0 4px; }
+  .timing td { padding: 9px 10px; border-bottom: 1px solid var(--line); font-size: 11pt; vertical-align: top; }
+  .timing tr:last-child td { border-bottom: none; }
+  .timing .t { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--indigo); white-space: nowrap; width: 1.1in; }
+  .timing .n { font-family: 'JetBrains Mono', monospace; color: var(--ink-3); width: 0.5in; }
+
+  .obj-title { font-size: 13pt; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     SVG SYMBOL LIBRARY  (all art is inline, drawn here, reused via <use>)
+     Coordinate space for every symbol: 0 0 100 100.
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+
+    <!-- Hex-H logo -->
+    <symbol id="hexlogo" viewBox="0 0 100 100">
+      <path d="M50 6 L88 28 L88 72 L50 94 L12 72 L12 28 Z" fill="#fff" stroke="#4f46e5" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M38 34 L38 66 M62 34 L62 66 M38 50 L62 50" fill="none" stroke="#4f46e5" stroke-width="6" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- Hexa the robot — neutral/happy (full body, geometric) -->
+    <symbol id="hexa" viewBox="0 0 100 100">
+      <!-- antenna -->
+      <line x1="50" y1="20" x2="50" y2="10"/>
+      <circle cx="50" cy="7" r="3.5" fill="#4f46e5" stroke="none"/>
+      <!-- head -->
+      <rect x="24" y="20" width="52" height="40" rx="12" fill="#fff"/>
+      <circle cx="40" cy="38" r="4.4" fill="#111827" stroke="none"/>
+      <circle cx="60" cy="38" r="4.4" fill="#111827" stroke="none"/>
+      <path d="M40 48 Q50 55 60 48" fill="none"/>
+      <!-- neck -->
+      <line x1="50" y1="60" x2="50" y2="64"/>
+      <!-- body -->
+      <rect x="30" y="64" width="40" height="24" rx="8" fill="#fff"/>
+      <!-- chest hex badge -->
+      <path d="M50 69 L57 73 L57 80 L50 84 L43 80 L43 73 Z" fill="none" stroke="#4f46e5" stroke-width="2.4"/>
+      <!-- arms -->
+      <path d="M30 72 L20 78" />
+      <path d="M70 72 L80 78" />
+      <!-- feet -->
+      <line x1="40" y1="88" x2="40" y2="94"/>
+      <line x1="60" y1="88" x2="60" y2="94"/>
+    </symbol>
+
+    <!-- Hexa thinking (flat mouth + thought dots) -->
+    <symbol id="hexa-think" viewBox="0 0 100 100">
+      <line x1="50" y1="20" x2="50" y2="10"/>
+      <circle cx="50" cy="7" r="3.5" fill="#4f46e5" stroke="none"/>
+      <rect x="24" y="20" width="52" height="40" rx="12" fill="#fff"/>
+      <circle cx="40" cy="38" r="4.4" fill="#111827" stroke="none"/>
+      <circle cx="60" cy="38" r="4.4" fill="#111827" stroke="none"/>
+      <line x1="42" y1="49" x2="58" y2="49"/>
+      <line x1="50" y1="60" x2="50" y2="64"/>
+      <rect x="30" y="64" width="40" height="24" rx="8" fill="#fff"/>
+      <path d="M50 69 L57 73 L57 80 L50 84 L43 80 L43 73 Z" fill="none" stroke="#4f46e5" stroke-width="2.4"/>
+      <path d="M30 72 L20 78" />
+      <path d="M70 72 L80 78" />
+      <line x1="40" y1="88" x2="40" y2="94"/>
+      <line x1="60" y1="88" x2="60" y2="94"/>
+      <circle cx="78" cy="30" r="2.4" fill="#4f46e5" stroke="none"/>
+      <circle cx="85" cy="23" r="3.4" fill="#4f46e5" stroke="none"/>
+    </symbol>
+
+    <!-- Watering can -->
+    <symbol id="can" viewBox="0 0 100 100">
+      <path d="M30 42 L30 78 Q30 84 36 84 L64 84 Q70 84 70 78 L70 42 Z" fill="#fff"/>
+      <path d="M30 42 L70 42" />
+      <path d="M70 52 L86 40" />
+      <path d="M86 40 L80 34 M86 40 L92 46" />
+      <path d="M40 42 Q50 30 60 42" fill="none"/>
+    </symbol>
+
+    <!-- Sneaker with untied lace -->
+    <symbol id="shoe" viewBox="0 0 100 100">
+      <path d="M14 66 L14 52 Q14 46 22 46 L40 46 L58 60 L82 62 Q90 63 90 70 L90 72 Q90 78 82 78 L20 78 Q14 78 14 72 Z" fill="#fff"/>
+      <path d="M40 46 L44 60 M50 50 L54 62 M60 56 L62 64" />
+      <path d="M40 46 Q34 34 26 40 M44 47 Q52 36 58 44" fill="none"/>
+      <circle cx="26" cy="40" r="2.2" fill="#4f46e5" stroke="none"/>
+      <circle cx="58" cy="44" r="2.2" fill="#4f46e5" stroke="none"/>
+    </symbol>
+
+    <!-- Backpack with stuck zipper -->
+    <symbol id="backpack" viewBox="0 0 100 100">
+      <rect x="28" y="24" width="44" height="60" rx="14" fill="#fff"/>
+      <path d="M40 24 Q40 12 50 12 Q60 12 60 24" fill="none"/>
+      <path d="M36 46 Q50 40 64 46" fill="none"/>
+      <rect x="40" y="52" width="20" height="24" rx="6" fill="#fff"/>
+      <path d="M50 30 L50 50" stroke-dasharray="3 3"/>
+      <rect x="46" y="46" width="8" height="6" rx="2" fill="#4f46e5" stroke="none"/>
+    </symbol>
+
+    <!-- Wobbly LEGO-style block tower -->
+    <symbol id="tower" viewBox="0 0 100 100">
+      <rect x="34" y="74" width="34" height="14" rx="2" fill="#fff"/>
+      <circle cx="42" cy="72" r="3" fill="#fff"/><circle cx="52" cy="72" r="3" fill="#fff"/><circle cx="60" cy="72" r="3" fill="#fff"/>
+      <g transform="rotate(-8 50 60)">
+        <rect x="36" y="56" width="30" height="14" rx="2" fill="#fff"/>
+        <circle cx="44" cy="54" r="3" fill="#fff"/><circle cx="54" cy="54" r="3" fill="#fff"/>
+      </g>
+      <g transform="rotate(9 52 42)">
+        <rect x="40" y="38" width="26" height="14" rx="2" fill="#fff"/>
+        <circle cx="47" cy="36" r="3" fill="#fff"/><circle cx="57" cy="36" r="3" fill="#fff"/>
+      </g>
+      <path d="M78 40 L84 34 M80 44 L88 42" stroke="#4f46e5"/>
+    </symbol>
+
+    <!-- Flashlight with dead batteries -->
+    <symbol id="flashlight" viewBox="0 0 100 100">
+      <rect x="30" y="42" width="34" height="20" rx="5" fill="#fff"/>
+      <path d="M64 44 L78 38 L78 66 L64 60 Z" fill="#fff"/>
+      <path d="M78 46 L90 42 M78 52 L92 52 M78 58 L90 62" stroke="#4f46e5"/>
+      <line x1="42" y1="42" x2="42" y2="62"/>
+      <path d="M20 46 L26 46 M23 43 L23 49" stroke="#4f46e5"/>
+    </symbol>
+
+    <!-- Bike chain slipped off -->
+    <symbol id="bike" viewBox="0 0 100 100">
+      <circle cx="30" cy="62" r="16" fill="#fff"/>
+      <circle cx="72" cy="62" r="16" fill="#fff"/>
+      <circle cx="30" cy="62" r="3" fill="#111827" stroke="none"/>
+      <circle cx="72" cy="62" r="3" fill="#111827" stroke="none"/>
+      <path d="M30 62 L48 62 L60 40 M48 62 L72 62 M60 40 L74 40" fill="none"/>
+      <path d="M40 78 Q52 86 64 80" fill="none" stroke="#4f46e5" stroke-dasharray="4 4"/>
+    </symbol>
+
+    <!-- Kite, tangled string -->
+    <symbol id="kite" viewBox="0 0 100 100">
+      <path d="M50 14 L74 42 L50 70 L26 42 Z" fill="#fff"/>
+      <path d="M50 14 L50 70 M26 42 L74 42" />
+      <path d="M50 70 Q56 82 48 88 Q40 94 50 98" fill="none" stroke="#4f46e5"/>
+    </symbol>
+
+    <!-- Paper airplane nose-dived -->
+    <symbol id="plane" viewBox="0 0 100 100">
+      <path d="M20 34 L84 50 L44 60 Z" fill="#fff"/>
+      <path d="M44 60 L84 50 L56 74 Z" fill="#fff"/>
+      <path d="M44 60 L52 56" />
+      <path d="M30 70 Q40 78 52 74" fill="none" stroke="#4f46e5" stroke-dasharray="4 4"/>
+    </symbol>
+
+    <!-- Tangled headphones -->
+    <symbol id="headphones" viewBox="0 0 100 100">
+      <path d="M26 56 L26 44 A24 24 0 0 1 74 44 L74 56" fill="none"/>
+      <rect x="20" y="54" width="12" height="20" rx="5" fill="#fff"/>
+      <rect x="68" y="54" width="12" height="20" rx="5" fill="#fff"/>
+      <path d="M74 66 Q86 74 78 84 Q70 92 82 92" fill="none" stroke="#4f46e5"/>
+    </symbol>
+
+    <!-- loop arrow (quarter turn, clockwise) -->
+    <symbol id="arrow" viewBox="0 0 100 100">
+      <path d="M14 50 L74 50" fill="none"/>
+      <path d="M64 40 L76 50 L64 60" fill="none"/>
+    </symbol>
+
+  </defs>
+</svg>
+
+
+<!-- ============================================================ PAGE 1 — COVER ============================================================ -->
+<section class="page" style="display:flex; flex-direction:column;">
+  <div class="eyebrow">Helix Kids Lab &middot; Classroom Activity Kit</div>
+
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+    <svg class="art" style="width:1.5in;height:1.5in;margin-bottom:6px" viewBox="0 0 100 100"><use href="#hexlogo"/></svg>
+
+    <h1 style="font-size:34pt; font-weight:800; letter-spacing:-0.02em; max-width:6.4in; margin-top:10px;">
+      How Robots Learn to <span class="accent">Fix Themselves</span>
+    </h1>
+
+    <svg class="art" style="width:2.4in;height:2.4in;margin:14px 0 4px" viewBox="0 0 100 100"><use href="#hexa"/></svg>
+
+    <p style="font-size:13pt; color:var(--ink-2); max-width:5.4in; margin-top:6px;">
+      A 45-minute unplugged lesson about <strong>try &rarr; notice &rarr; fix &rarr; remember</strong> —
+      the loop that teaches software to recover from its own mistakes.
+    </p>
+
+    <div style="display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; justify-content:center;">
+      <span class="box-accent mono" style="font-size:9.5pt; padding:8px 14px; color:var(--indigo-deep);">45-MINUTE UNPLUGGED LESSON</span>
+      <span class="box-accent mono" style="font-size:9.5pt; padding:8px 14px; color:var(--indigo-deep);">AGES 8&ndash;12</span>
+      <span class="box-accent mono" style="font-size:9.5pt; padding:8px 14px; color:var(--indigo-deep);">NO COMPUTERS NEEDED</span>
+    </div>
+  </div>
+
+  <div style="text-align:center; font-size:10pt; color:var(--ink-3); border-top:1px solid var(--line); padding-top:14px;">
+    Free for schools, libraries, and code clubs. &copy; Helix Labs, Inc.
+  </div>
+</section>
+
+
+<!-- ============================================================ PAGE 2 — TEACHER GUIDE (1 of 2) ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Teacher Guide &middot; Page 1 of 2</div>
+  <h2 class="section-title">Before you start</h2>
+  <p class="section-lead">Everything you need to run this lesson is in this kit. You do <strong>not</strong> need to be technical — the talking points on the next page are written out word-for-word.</p>
+
+  <h3 style="font-size:14pt; margin-top:6px; margin-bottom:8px;">Learning objectives</h3>
+  <p style="font-size:11pt; color:var(--ink-3); margin-bottom:10px;">By the end of the lesson, students can:</p>
+  <div style="display:grid; grid-template-columns:1fr; gap:9px; margin-bottom:16px;">
+    <div class="box"><strong class="accent mono" style="font-size:10pt;">OBJECTIVE 1</strong><br>
+      Explain that <strong>mistakes are information</strong> — a failure tells you something useful about what to try next.</div>
+    <div class="box"><strong class="accent mono" style="font-size:10pt;">OBJECTIVE 2</strong><br>
+      Describe and use the <strong>try &rarr; notice &rarr; fix &rarr; remember</strong> loop on a real, everyday problem.</div>
+    <div class="box"><strong class="accent mono" style="font-size:10pt;">OBJECTIVE 3</strong><br>
+      Explain why writing fixes into a <strong>shared memory</strong> stops a whole group from repeating the same mistake.</div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+    <div>
+      <h3 style="font-size:14pt; margin-bottom:8px;">Materials</h3>
+      <ul class="obj-list">
+        <li>The printed sheets in this kit</li>
+        <li>Scissors (one pair per pair of students)</li>
+        <li>Pencils</li>
+        <li>Tape</li>
+      </ul>
+      <p style="font-size:10.5pt; color:var(--ink-3); margin-top:8px;">Nothing else. No computers, no internet, no accounts.</p>
+    </div>
+    <div>
+      <h3 style="font-size:14pt; margin-bottom:8px;">Timing plan (45 min)</h3>
+      <table class="timing">
+        <tr><td class="t">5 min</td><td class="n">01</td><td>Hook — read the Hexa story aloud</td></tr>
+        <tr><td class="t">10 min</td><td class="n">02</td><td>Concept — the four-step loop</td></tr>
+        <tr><td class="t">20 min</td><td class="n">03</td><td>Activity — Bug Hunt + Memory Book</td></tr>
+        <tr><td class="t">10 min</td><td class="n">04</td><td>Share-out — build the class poster</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:14px;">
+    <strong>An honest note for educators.</strong> Helix Labs builds self-repairing software for
+    businesses. This kit teaches the underlying idea; it contains no product content and collects no
+    student data.
+  </div>
+
+  <div class="page-foot"><span>Helix Kids Lab &middot; Classroom Activity Kit</span><span>Teacher Guide &middot; 2</span></div>
+</section>
+
+
+<!-- ============================================================ PAGE 3 — TEACHER GUIDE (2 of 2): TALKING POINTS ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Teacher Guide &middot; Page 2 of 2</div>
+  <h2 class="section-title">What to say</h2>
+  <p class="section-lead">Read the <span class="mono accent">SAY</span> lines aloud. The <span class="mono accent">DO</span> lines tell you what to hand out or point to.</p>
+
+  <div class="say"><span class="cue">Hook</span> <span class="mono accent" style="font-size:9pt;">(5 min)</span></div>
+  <p class="say" style="margin-top:-4px;"><span class="cue">Say</span> &ldquo;I&rsquo;m going to read you a very short story about a robot named Hexa. Your job is to notice the moment Hexa gets <em>stuck</em>.&rdquo;</p>
+  <p class="say"><span class="cue">Do</span> Read the Hook Story page aloud. Then ask: &ldquo;What did Hexa try first? Did it work?&rdquo;</p>
+
+  <div class="say" style="margin-top:14px;"><span class="cue">Concept</span> <span class="mono accent" style="font-size:9pt;">(10 min)</span></div>
+  <p class="say" style="margin-top:-4px;"><span class="cue">Say</span> &ldquo;Every good problem-solver — a person <em>or</em> a robot — uses the same four steps. Let&rsquo;s learn them.&rdquo;</p>
+  <p class="say"><span class="cue">Say</span> &ldquo;<strong>TRY</strong> something. <strong>NOTICE</strong> if it didn&rsquo;t work. <strong>FIX</strong> it by figuring out <em>why</em>. Then <strong>REMEMBER</strong> the fix, so the mistake never wins twice.&rdquo;</p>
+  <p class="say"><span class="cue">Say</span> &ldquo;Doing the exact same thing again gives you the exact same mistake. A mistake isn&rsquo;t a dead end — it&rsquo;s a <em>clue</em>.&rdquo;</p>
+
+  <div class="say" style="margin-top:14px;"><span class="cue">Activity</span> <span class="mono accent" style="font-size:9pt;">(20 min)</span></div>
+  <p class="say" style="margin-top:-4px;"><span class="cue">Do</span> Hand each pair a set of <strong>Bug Hunt</strong> cards. &ldquo;On the front is something that went wrong. On the back, write WHAT went wrong, WHY, and your FIX.&rdquo;</p>
+  <p class="say"><span class="cue">Do</span> Give each pair a <strong>Memory Book</strong> template. &ldquo;Pick your best fix. Write it as one rule: IF this problem, THEN this fix.&rdquo;</p>
+
+  <div class="say" style="margin-top:14px;"><span class="cue">Share-out</span> <span class="mono accent" style="font-size:9pt;">(10 min)</span></div>
+  <p class="say" style="margin-top:-4px;"><span class="cue">Do</span> Tape every pair&rsquo;s rule onto the <strong>Our Class Memory Book</strong> poster.</p>
+  <p class="say"><span class="cue">Say</span> &ldquo;Now <em>nobody</em> in this class has to make these mistakes again — we all share one memory. That&rsquo;s exactly how self-repairing software works.&rdquo;</p>
+
+  <div class="page-foot"><span>Helix Kids Lab &middot; Classroom Activity Kit</span><span>Teacher Guide &middot; 3</span></div>
+</section>
+
+
+<!-- ============================================================ PAGE 4 — HOOK STORY (read-aloud) ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Read Aloud &middot; The Hook Story</div>
+  <h2 class="section-title">Hexa and the Empty Can</h2>
+
+  <div style="display:flex; gap:20px; align-items:flex-start; margin:8px 0 18px;">
+    <svg class="art" style="width:1.5in;height:1.5in;flex:none" viewBox="0 0 100 100"><use href="#hexa"/></svg>
+    <svg class="art" style="width:1.1in;height:1.1in;flex:none;margin-top:14px" viewBox="0 0 100 100"><use href="#can"/></svg>
+  </div>
+
+  <div style="font-size:14pt; line-height:1.75; color:var(--ink); max-width:6.2in;">
+    <p style="margin-bottom:14px;">Every morning, a little robot named <strong>Hexa</strong> waters the classroom plants.</p>
+    <p style="margin-bottom:14px;">One day, Hexa picks up the watering can and tips it over the plants&hellip; but <strong>nothing comes out</strong>. The can is <strong>empty</strong>.</p>
+    <p style="margin-bottom:14px;">So Hexa tries again. Same tip, same wiggle&hellip; still nothing. Hexa tries a <em>third</em> time, the exact same way &mdash; and, of course, <strong>still nothing</strong>.</p>
+    <p style="margin-bottom:14px;">Then Hexa stops. Hexa <strong>looks inside the can</strong> and thinks: &ldquo;Doing the same thing keeps giving me the same problem. <em>Why</em> is it empty?&rdquo;</p>
+    <p style="margin-bottom:14px;">Hexa carries the can to the sink, fills it with water, and waters every plant. It works!</p>
+    <p style="margin-bottom:0;">Before rolling away, Hexa writes one line in its notebook: <span class="mono" style="font-size:12pt; color:var(--indigo-deep);">empty can &rarr; refill at the sink first</span>. Tomorrow, this will never be a problem again.</p>
+  </div>
+
+  <div class="callout" style="margin-top:22px;"><strong>Ask the class:</strong> What did Hexa do that finally worked? (Answer: Hexa <em>stopped and figured out why</em> — then <em>remembered</em> the fix.)</div>
+
+  <div class="page-foot"><span>Helix Kids Lab &middot; Classroom Activity Kit</span><span>Hook Story &middot; 4</span></div>
+</section>
+
+
+<!-- ============================================================ PAGE 5 — ACTIVITY A: BUG HUNT CARDS (fronts) ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Activity A &middot; Bug Hunt Cards (Fronts)</div>
+  <h2 style="font-size:18pt; font-weight:800; margin:8px 0 2px;">Cut out the 8 cards. Work in pairs.</h2>
+  <p style="font-size:10.5pt; color:var(--ink-3); margin-bottom:12px;">Each card shows something that went wrong. Print this page and page 6 back-to-back (flip on the long edge) so each front lines up with its answer lines.</p>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:repeat(4, 1.9in); gap:0;">
+    <!-- card 1 -->
+    <div style="border:1.5px dashed var(--line); display:flex; align-items:center; gap:14px; padding:12px 16px;">
+      <svg class="art" style="width:1.1in;height:1.1in;flex:none" viewBox="0 0 100 100"><use href="#shoe"/></svg>
+      <div><div class="obj-title">A shoelace came untied</div><div style="font-size:10pt;color:var(--ink-3)">&hellip;and you almost tripped.</div></div>
+    </div>
+    <!-- card 2 -->
+    <div style="border:1.5px dashed var(--line); border-left:none; display:flex; align-items:center; gap:14px; padding:12px 16px;">
+      <svg class="art" style="width:1.1in;height:1.1in;flex:none" viewBox="0 0 100 100"><use href="#backpack"/></svg>
+      <div><div class="obj-title">The backpack zipper is stuck</div><div style="font-size:10pt;color:var(--ink-3)">&hellip;it won&rsquo;t open <em>or</em> close.</div></div>
+    </div>
+    <!-- card 3 -->
+    <div style="border:1.5px dashed var(--line); border-top:none; display:flex; align-items:center; gap:14px; padding:12px 16px;">
+      <svg class="art" style="width:1.1in;height:1.1in;flex:none" viewBox="0 0 100 100"><use href="#tower"/></svg>
+      <div><div class="obj-title">The LEGO tower keeps toppling</div><div style="font-size:10pt;color:var(--ink-3)">&hellip;every time it gets tall.</div></div>
+    </div>
+    <!-- card 4 -->
+    <div style="border:1.5px dashed var(--line); border-left:none; border-top:none; display:flex; align-items:center; gap:14px; padding:12px 16px;">
+      <svg class="art" style="width:1.1in;height:1.1in;flex:none" viewBox="0 0 100 100"><use href="#flashlight"/></svg>
+      <div><div class="obj-title">The flashlight won&rsquo;t turn on</div><div style="font-size:10pt;color:var(--ink-3)">&hellip;it was fine last week.</div></div>
+    </div>
+    <!-- card 5 -->
+    <div style="border:1.5px dashed var(--line); border-top:none; display:flex; align-items:center; gap:14px; padding:12px 16px;">
+      <svg class="art" style="width:1.1in;height:1.1in;flex:none" viewBox="0 0 100 100"><use href="#bike"/></svg>
+      <div><div class="obj-title">The bike chain slipped off</div><div style="font-size:10pt;color:var(--ink-3)">&hellip;the pedals spin but the bike won&rsquo;t go.</div></div>
+    </div>
+    <!-- card 6 -->
+    <div style="border:1.5px dashed var(--line); border-left:none; border-top:none; display:flex; align-items:center; gap:14px; padding:12px 16px;">
+      <svg class="art" style="width:1.1in;height:1.1in;flex:none" viewBox="0 0 100 100"><use href="#kite"/></svg>
+      <div><div class="obj-title">The kite won&rsquo;t stay in the air</div><div style="font-size:10pt;color:var(--ink-3)">&hellip;the string is all tangled.</div></div>
+    </div>
+    <!-- card 7 -->
+    <div style="border:1.5px dashed var(--line); border-top:none; display:flex; align-items:center; gap:14px; padding:12px 16px;">
+      <svg class="art" style="width:1.1in;height:1.1in;flex:none" viewBox="0 0 100 100"><use href="#plane"/></svg>
+      <div><div class="obj-title">The paper airplane nose-dives</div><div style="font-size:10pt;color:var(--ink-3)">&hellip;straight into the floor.</div></div>
+    </div>
+    <!-- card 8 -->
+    <div style="border:1.5px dashed var(--line); border-left:none; border-top:none; display:flex; align-items:center; gap:14px; padding:12px 16px;">
+      <svg class="art" style="width:1.1in;height:1.1in;flex:none" viewBox="0 0 100 100"><use href="#headphones"/></svg>
+      <div><div class="obj-title">The headphones are in a knot</div><div style="font-size:10pt;color:var(--ink-3)">&hellip;again.</div></div>
+    </div>
+  </div>
+
+  <div class="page-foot"><span>Helix Kids Lab &middot; Classroom Activity Kit</span><span>Bug Hunt &middot; 5</span></div>
+</section>
+
+
+<!-- ============================================================ PAGE 6 — ACTIVITY A: BUG HUNT CARDS (backs) ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Activity A &middot; Bug Hunt Cards (Backs)</div>
+  <h2 style="font-size:18pt; font-weight:800; margin:8px 0 2px;">Fill in the back of each card.</h2>
+  <p style="font-size:10.5pt; color:var(--ink-3); margin-bottom:12px;">Column order is mirrored so the backs line up with the fronts on page 5 when printed double-sided.</p>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:repeat(4, 1.9in); gap:0;">
+    <!-- 8 identical answer backs; column order is mirrored so backs align with fronts when duplex-printed -->
+    <div class="bhb"><div class="q">WHAT WENT WRONG?</div><div class="ln"></div><div class="q">WHY?</div><div class="ln"></div><div class="q">MY FIX</div><div class="ln"></div></div>
+    <div class="bhb bl"><div class="q">WHAT WENT WRONG?</div><div class="ln"></div><div class="q">WHY?</div><div class="ln"></div><div class="q">MY FIX</div><div class="ln"></div></div>
+    <div class="bhb bt"><div class="q">WHAT WENT WRONG?</div><div class="ln"></div><div class="q">WHY?</div><div class="ln"></div><div class="q">MY FIX</div><div class="ln"></div></div>
+    <div class="bhb bl bt"><div class="q">WHAT WENT WRONG?</div><div class="ln"></div><div class="q">WHY?</div><div class="ln"></div><div class="q">MY FIX</div><div class="ln"></div></div>
+    <div class="bhb bt"><div class="q">WHAT WENT WRONG?</div><div class="ln"></div><div class="q">WHY?</div><div class="ln"></div><div class="q">MY FIX</div><div class="ln"></div></div>
+    <div class="bhb bl bt"><div class="q">WHAT WENT WRONG?</div><div class="ln"></div><div class="q">WHY?</div><div class="ln"></div><div class="q">MY FIX</div><div class="ln"></div></div>
+    <div class="bhb bt"><div class="q">WHAT WENT WRONG?</div><div class="ln"></div><div class="q">WHY?</div><div class="ln"></div><div class="q">MY FIX</div><div class="ln"></div></div>
+    <div class="bhb bl bt"><div class="q">WHAT WENT WRONG?</div><div class="ln"></div><div class="q">WHY?</div><div class="ln"></div><div class="q">MY FIX</div><div class="ln"></div></div>
+  </div>
+
+  <style>
+    .bhb { border:1.5px dashed var(--line); padding:14px 16px 10px; display:flex; flex-direction:column; }
+    .bhb.bl { border-left:none; }
+    .bhb.bt { border-top:none; }
+    .bhb .q {
+      font-family:'JetBrains Mono',monospace; font-size:7.5pt; font-weight:700;
+      letter-spacing:0.06em; color:var(--indigo); margin-bottom:2px;
+    }
+    .bhb .ln { border-bottom:1.5px solid var(--line); height:0.34in; margin-bottom:6px; }
+    .bhb .ln:last-child { margin-bottom:0; }
+  </style>
+
+  <div class="page-foot"><span>Helix Kids Lab &middot; Classroom Activity Kit</span><span>Bug Hunt &middot; 6</span></div>
+</section>
+
+
+<!-- ============================================================ PAGE 7 — ACTIVITY B: THE MEMORY BOOK (foldable template) ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Activity B &middot; The Memory Book</div>
+  <h2 style="font-size:18pt; font-weight:800; margin:8px 0 2px;">Fold on the dotted line to make a little book.</h2>
+  <p style="font-size:10.5pt; color:var(--ink-3); margin-bottom:14px;">Write your best fix as one rule. Use the shape: <span class="mono accent">IF [problem] THEN [fix]</span>.</p>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; border:1.5px solid var(--line); border-radius:12px; overflow:hidden; height:7in;">
+    <!-- LEFT PANEL = COVER -->
+    <div style="border-right:2px dashed var(--indigo); padding:24px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+      <svg class="art" style="width:1.6in;height:1.6in" viewBox="0 0 100 100"><use href="#hexa"/></svg>
+      <div class="mono accent" style="font-size:10pt; letter-spacing:0.14em; margin-top:14px;">MY MEMORY BOOK</div>
+      <div style="font-size:11pt; color:var(--ink-3); margin-top:18px;">Names of our pair:</div>
+      <div class="writeline" style="width:80%; margin-top:14px;"></div>
+      <div class="writeline" style="width:80%; margin-top:18px;"></div>
+      <div style="font-size:8.5pt; color:var(--ink-3); margin-top:auto;">&larr; fold here &middot; cover goes on the outside</div>
+    </div>
+
+    <!-- RIGHT PANEL = RULES (inside) -->
+    <div style="padding:22px;">
+      <div style="font-size:12pt; font-weight:700; margin-bottom:14px;">Our best fixes</div>
+
+      <div class="box-accent" style="padding:12px 14px; margin-bottom:14px;">
+        <div class="mono" style="font-size:11pt; font-weight:700; color:var(--indigo-deep);">IF</div>
+        <div class="writeline mono" style="margin-top:2px;"></div>
+        <div class="mono" style="font-size:11pt; font-weight:700; color:var(--indigo-deep); margin-top:8px;">THEN</div>
+        <div class="writeline mono" style="margin-top:2px;"></div>
+      </div>
+
+      <div class="box-accent" style="padding:12px 14px; margin-bottom:14px;">
+        <div class="mono" style="font-size:11pt; font-weight:700; color:var(--indigo-deep);">IF</div>
+        <div class="writeline mono" style="margin-top:2px;"></div>
+        <div class="mono" style="font-size:11pt; font-weight:700; color:var(--indigo-deep); margin-top:8px;">THEN</div>
+        <div class="writeline mono" style="margin-top:2px;"></div>
+      </div>
+
+      <div class="box-accent" style="padding:12px 14px;">
+        <div class="mono" style="font-size:11pt; font-weight:700; color:var(--indigo-deep);">IF</div>
+        <div class="writeline mono" style="margin-top:2px;"></div>
+        <div class="mono" style="font-size:11pt; font-weight:700; color:var(--indigo-deep); margin-top:8px;">THEN</div>
+        <div class="writeline mono" style="margin-top:2px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px;">When your pair picks a favorite rule, copy it onto a slip of paper and take it to the class poster on the next page.</div>
+
+  <div class="page-foot"><span>Helix Kids Lab &middot; Classroom Activity Kit</span><span>Memory Book &middot; 7</span></div>
+</section>
+
+
+<!-- ============================================================ PAGE 8 — ACTIVITY B: CLASS POSTER ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Activity B &middot; Share-Out Poster</div>
+  <div style="text-align:center; margin:6px 0 4px;">
+    <svg class="art" style="width:0.8in;height:0.8in" viewBox="0 0 100 100"><use href="#hexa"/></svg>
+    <h2 style="font-size:26pt; font-weight:800; margin-top:2px;">Our Class Memory Book</h2>
+    <p style="font-size:11pt; color:var(--ink-2); max-width:5.6in; margin:6px auto 0;">Tape every pair&rsquo;s best rule here. When one of us learns a fix, <strong>all of us</strong> remember it.</p>
+  </div>
+
+  <div style="border:2px solid var(--indigo); border-radius:14px; height:6.7in; margin-top:14px; padding:16px; position:relative; background:
+      repeating-linear-gradient(0deg, transparent, transparent 0.86in, var(--line) 0.86in, var(--line) calc(0.86in + 1px));">
+    <span class="mono" style="position:absolute; top:10px; left:16px; font-size:8.5pt; color:var(--ink-3); letter-spacing:0.1em;">TAPE RULES BELOW &middot; IF &hellip; THEN &hellip;</span>
+  </div>
+
+  <div class="page-foot"><span>Helix Kids Lab &middot; Classroom Activity Kit</span><span>Class Poster &middot; 8</span></div>
+</section>
+
+
+<!-- ============================================================ PAGE 9 — WRAP-UP DISCUSSION ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Wrap-Up &middot; Discussion</div>
+  <h2 class="section-title">Talk about it</h2>
+  <p class="section-lead">Ask these three questions. There are no wrong answers — the goal is to notice why <em>remembering</em> matters.</p>
+
+  <div style="display:flex; flex-direction:column; gap:22px; margin-top:10px;">
+    <div class="box" style="display:flex; gap:18px; align-items:flex-start;">
+      <div class="mono accent" style="font-size:22pt; font-weight:700; line-height:1; flex:none;">1</div>
+      <div>
+        <div style="font-size:14pt; font-weight:700; margin-bottom:8px;">What happens tomorrow if the same problem comes back?</div>
+        <div class="writeline"></div><div class="writeline"></div>
+      </div>
+    </div>
+    <div class="box" style="display:flex; gap:18px; align-items:flex-start;">
+      <div class="mono accent" style="font-size:22pt; font-weight:700; line-height:1; flex:none;">2</div>
+      <div>
+        <div style="font-size:14pt; font-weight:700; margin-bottom:8px;">What if a NEW kid joins our class — do they have to make all the mistakes again?</div>
+        <div class="writeline"></div><div class="writeline"></div>
+      </div>
+    </div>
+    <div class="box" style="display:flex; gap:18px; align-items:flex-start;">
+      <div class="mono accent" style="font-size:22pt; font-weight:700; line-height:1; flex:none;">3</div>
+      <div>
+        <div style="font-size:14pt; font-weight:700; margin-bottom:8px;">Where else could a memory book help?</div>
+        <div class="writeline"></div><div class="writeline"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:26px;"><strong>Big idea to land:</strong> Software that shares a memory book fixes a mistake <em>once</em> — and then the mistake never wins twice, for anyone who shares the book.</div>
+
+  <div class="page-foot"><span>Helix Kids Lab &middot; Classroom Activity Kit</span><span>Wrap-Up &middot; 9</span></div>
+</section>
+
+
+<!-- ============================================================ PAGE 10 — TAKE-HOME PAGE ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Take-Home Page</div>
+  <h2 style="font-size:20pt; font-weight:800; margin:6px 0 2px;">Color Hexa &amp; remember the loop</h2>
+  <p style="font-size:11pt; color:var(--ink-3); margin-bottom:14px;">Color the robot any way you like, then follow the arrows around the loop.</p>
+
+  <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:22px; align-items:center;">
+    <!-- coloring Hexa (outline only, no fills) -->
+    <div style="border:1.5px solid var(--line); border-radius:14px; padding:14px; display:flex; justify-content:center;">
+      <svg style="width:3in;height:3in; fill:none; stroke:#111827; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;" viewBox="0 0 100 100">
+        <line x1="50" y1="20" x2="50" y2="10"/><circle cx="50" cy="7" r="3.5"/>
+        <rect x="22" y="20" width="56" height="42" rx="12"/>
+        <circle cx="40" cy="39" r="5"/><circle cx="60" cy="39" r="5"/>
+        <path d="M39 49 Q50 57 61 49"/>
+        <line x1="50" y1="62" x2="50" y2="66"/>
+        <rect x="28" y="66" width="44" height="26" rx="9"/>
+        <path d="M50 71 L58 75 L58 83 L50 87 L42 83 L42 75 Z"/>
+        <path d="M28 74 L17 81"/><path d="M72 74 L83 81"/>
+        <line x1="40" y1="92" x2="40" y2="98"/><line x1="60" y1="92" x2="60" y2="98"/>
+      </svg>
+    </div>
+
+    <!-- loop diagram: try -> notice -> fix -> remember (cycle) -->
+    <div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div class="box-accent" style="text-align:center; padding:10px;"><span class="mono" style="font-size:8pt; color:var(--ink-3);">STEP 1</span><br><strong style="font-size:13pt;">TRY</strong></div>
+        <div style="text-align:center; line-height:0;"><svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2 V13 M2.5 8.5 L7 13 L11.5 8.5"/></svg></div>
+        <div class="box-accent" style="text-align:center; padding:10px;"><span class="mono" style="font-size:8pt; color:var(--ink-3);">STEP 2</span><br><strong style="font-size:13pt;">NOTICE</strong></div>
+        <div style="text-align:center; line-height:0;"><svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2 V13 M2.5 8.5 L7 13 L11.5 8.5"/></svg></div>
+        <div class="box-accent" style="text-align:center; padding:10px;"><span class="mono" style="font-size:8pt; color:var(--ink-3);">STEP 3</span><br><strong style="font-size:13pt;">FIX</strong></div>
+        <div style="text-align:center; line-height:0;"><svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2 V13 M2.5 8.5 L7 13 L11.5 8.5"/></svg></div>
+        <div class="box-accent" style="text-align:center; padding:10px;"><span class="mono" style="font-size:8pt; color:var(--ink-3);">STEP 4</span><br><strong style="font-size:13pt;">REMEMBER</strong></div>
+        <div style="display:flex; align-items:center; justify-content:center; gap:6px; color:var(--indigo); font-size:9pt;" class="mono"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#4f46e5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5 A5 5 0 1 1 4 11"/><path d="M1.5 7.5 L4 4.5 L6.5 7.5"/></svg><span>and the mistake never wins twice</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:22px; text-align:center;">
+    <div style="font-size:9pt; letter-spacing:0.1em; color:var(--indigo);" class="mono">FOR GROWN-UPS AT HOME</div>
+    <p style="font-size:12pt; color:var(--ink-2); margin-top:8px; max-width:5.6in; margin-left:auto; margin-right:auto;">
+      Today we learned how engineers teach software to recover from mistakes.
+      Learn more at <strong>tryhelix.dev/kids-lab</strong>.
+    </p>
+  </div>
+
+  <div class="page-foot"><span>Helix Kids Lab &middot; Classroom Activity Kit</span><span>Take-Home &middot; 10</span></div>
+</section>
+
+
+<!-- ============================================================ PAGE 11 — CERTIFICATE ============================================================ -->
+<section class="page" style="padding:0.45in;">
+  <div style="border:4px double var(--indigo); border-radius:16px; height:100%; padding:0.5in 0.6in; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative;">
+    <svg class="art" style="width:1in;height:1in" viewBox="0 0 100 100"><use href="#hexlogo"/></svg>
+    <div class="mono accent" style="font-size:10pt; letter-spacing:0.22em; margin-top:14px;">HELIX KIDS LAB</div>
+
+    <h2 style="font-size:30pt; font-weight:800; margin-top:24px; line-height:1.1;">Robot Repair<br>Certificate</h2>
+    <div style="font-size:13pt; color:var(--ink-2); margin-top:14px;">This certifies that</div>
+
+    <div style="width:75%; border-bottom:2px solid var(--ink); height:0.62in; margin-top:18px;"></div>
+    <div class="mono" style="font-size:8.5pt; color:var(--ink-3); letter-spacing:0.1em; margin-top:6px;">NAME (WRITE YOUR OWN)</div>
+
+    <div style="font-size:13pt; color:var(--ink-2); margin-top:22px; max-width:5in;">
+      is now a <strong>Certified Robot Repair Helper</strong> — someone who knows that mistakes are
+      clues, and that the loop <span class="mono accent" style="font-size:11pt;">try &rarr; notice &rarr; fix &rarr; remember</span> beats every bug.
+    </div>
+
+    <svg class="art" style="width:1.6in;height:1.6in; margin-top:22px;" viewBox="0 0 100 100"><use href="#hexa"/></svg>
+
+    <div style="display:flex; gap:0.8in; margin-top:26px;">
+      <div style="text-align:center;">
+        <div style="width:2in; border-bottom:1.5px solid var(--ink); height:0.3in;"></div>
+        <div class="mono" style="font-size:8pt; color:var(--ink-3); margin-top:6px; letter-spacing:0.08em;">TEACHER SIGNATURE</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:2in; border-bottom:1.5px solid var(--ink); height:0.3in;"></div>
+        <div class="mono" style="font-size:8pt; color:var(--ink-3); margin-top:6px; letter-spacing:0.08em;">DATE</div>
+      </div>
+    </div>
+
+    <div style="margin-top:auto; font-size:9pt; color:var(--ink-3);">Free for schools, libraries, and code clubs. &copy; Helix Labs, Inc.</div>
+  </div>
+</section>
+
+</body>
+</html>
