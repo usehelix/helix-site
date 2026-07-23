@@ -6,7 +6,7 @@ import { KidsLab } from '@/components/KidsLab'
 export const metadata: Metadata = {
   title: 'Helix Kids Lab',
   description:
-    'A free STEM outreach program teaching kids (ages 8–12) how software learns to fix its own mistakes. Try the Hexa demo and download a free unplugged classroom kit. No sign-up, no data collection.',
+    'A free interactive lesson for kids ages 8–12 about self-repairing software: try, notice, fix, remember. Six chapters, three things to play with. No sign-up, no data collection.',
   openGraph: {
     title: 'Helix Kids Lab — How Robots Learn to Fix Themselves',
     description:
