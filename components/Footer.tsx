@@ -17,6 +17,10 @@ const resources: FooterLink[] = [
   { label: 'GitHub', href: LINKS.github, external: true },
 ]
 
+const community: FooterLink[] = [
+  { label: 'Kids Lab', href: '/kids-lab' },
+]
+
 const ColHeader = ({ children }: { children: React.ReactNode }) => (
   <div className="mb-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-fg-3">
     {children}
@@ -38,7 +42,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-bg pb-8 pt-14">
       <div className="mx-auto max-w-container px-7">
-        <div className="mb-10 grid grid-cols-2 gap-12 md:grid-cols-[1.6fr_1fr_1fr]">
+        <div className="mb-10 grid grid-cols-2 gap-12 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2.5 text-fg no-underline">
               <Image src="/logo.png" alt="" width={26} height={26} />
@@ -59,6 +63,13 @@ export function Footer() {
           <div>
             <ColHeader>Resources</ColHeader>
             {resources.map((l) => (
+              <Anchor key={l.label} link={l} />
+            ))}
+          </div>
+
+          <div>
+            <ColHeader>Community</ColHeader>
+            {community.map((l) => (
               <Anchor key={l.label} link={l} />
             ))}
           </div>

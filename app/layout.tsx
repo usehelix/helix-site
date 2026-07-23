@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/react'
+import { ConditionalAnalytics } from '@/components/ConditionalAnalytics'
 import './globals.css'
 
 const inter = Inter({
@@ -86,7 +86,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${mono.variable}`}>
       <body className="font-sans">
         {children}
-        <Analytics />
+        <ConditionalAnalytics />
       </body>
     </html>
   )
